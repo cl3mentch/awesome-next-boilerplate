@@ -1,9 +1,9 @@
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import AllProviders from "./provider";
-import { cn } from "@/lib/utils";
+import ToasterComponent from "@/components/ui/toast/toast";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,8 +29,8 @@ export default function RootLayout({
         )}
       >
         <AllProviders>
+          <ToasterComponent />
           {children}
-          <Toaster position="top-center" />
         </AllProviders>
       </body>
     </html>
