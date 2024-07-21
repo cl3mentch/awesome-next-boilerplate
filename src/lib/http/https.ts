@@ -1,4 +1,3 @@
-import { useToast } from "@/components/ui/toast/use-toast";
 import Cookies from "js-cookie";
 import { urls } from "./settings";
 
