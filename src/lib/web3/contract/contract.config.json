@@ -1,0 +1,8 @@
+{
+  "contracts": {
+    "fakeUSDT": "0xa74d1950782cA15dB9f279f46b0857e404b6341b",
+    "RNG": "0xDf58DE02DF3F6B13564D4aF509C469eD81199ed1",
+    "GameContract": "0x9Dd44170e671222aA842706a2A54597c9899ec5d",
+    "MeicToken": "0x9Dd44170e671222aA842706a2A54597c9899ec5d"
+  }
+}

@@ -9,14 +9,13 @@ export default function Home() {
       expires: 7,
     });
   };
-  SetCookie();
 
   const GetCookie = () => {
     alert(Cookies.get("token"));
   };
   useEffect(() => {
     SetCookie();
-  });
+  }, []);
   return (
     <main className="flex min-h-screen relative flex-col items-center justify-between p-24 bg-black">
       <Button

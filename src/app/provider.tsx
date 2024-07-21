@@ -1,5 +1,5 @@
-import { config } from "@/lib/web3/walletconnect/config";
-import ContextProvider from "@/lib/web3/walletconnect/context";
+import { wagmiConfig } from "@/lib/web3/client";
+import ContextProvider from "@/lib/web3/web3modal/context";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 
@@ -27,7 +27,10 @@ const Compose = (props: Props) => {
 
 // Combine all your providers here
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
-  const initialState = cookieToInitialState(config, headers().get("cookie"));
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get("cookie")
+  );
 
   return (
     <Compose components={[[ContextProvider, { initialState: initialState }]]}>
