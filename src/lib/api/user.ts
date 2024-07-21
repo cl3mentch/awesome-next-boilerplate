@@ -9,7 +9,7 @@ const AuthAPI = {
   requestMessage: async function (address: Address) {
     try {
       const response = await api("GET", "/v1/auth/request", {
-        params: { address },
+        data: { address },
       });
 
       if (!response.data.message) throw new Error("No Message Received");
@@ -30,8 +30,10 @@ const AuthAPI = {
   verifyMessage: async function (signature: string, address: Address) {
     try {
       const response = await api("POST", "/v1/auth/verify", {
-        address,
-        signature,
+        data: {
+          address,
+          signature,
+        },
       });
 
       if (!response.data.token) {
@@ -52,7 +54,7 @@ const AuthAPI = {
 
     if (!cookie) return redirect("/");
 
-    await api("POST", "/v1/auth/logout");
+    await api("POST", "/v1/auth/logout", { useToken: true });
     Cookies.remove("accessToken");
     return redirect("/");
   },

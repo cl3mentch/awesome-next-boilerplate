@@ -7,25 +7,23 @@ type APIResponse<T = any> = {
   msg: string;
 };
 
+type APIMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+interface APIOptions {
+  data?: Record<string, any>;
+  useToken?: boolean;
+}
+
 export const api = async <T = any>(
-  method: string,
+  method: APIMethod,
   resource: string,
-  data?: any,
-  useToken: boolean = false
+  { data, useToken = false }: APIOptions = {}
 ): Promise<APIResponse<T>> => {
-  let resp: APIResponse<T>;
   try {
-    const queryString: string =
-      data && method === "GET"
-        ? "?" +
-          Object.keys(data as Record<string, any>)
-            .map(
-              (key) =>
-                encodeURIComponent(key) +
-                "=" +
-                encodeURIComponent((data as Record<string, any>)[key])
-            )
-            .join("&")
+    // Construct query string for GET requests
+    const queryString =
+      method === "GET" && data
+        ? "?" + new URLSearchParams(data).toString()
         : "";
 
     const headers: HeadersInit = {
@@ -34,7 +32,7 @@ export const api = async <T = any>(
     };
 
     if (useToken) {
-      const tokenApi: string | undefined = Cookies.get("accessToken");
+      const tokenApi = Cookies.get("accessToken");
       if (tokenApi) {
         headers.Authorization = `Bearer ${tokenApi}`;
       } else {
@@ -49,8 +47,7 @@ export const api = async <T = any>(
       body: method !== "GET" ? JSON.stringify(data) : null,
     });
 
-    resp = await response.json();
-
+    const resp: APIResponse<T> = await response.json();
     return resp;
   } catch (err) {
     console.error("API call error:", err);
