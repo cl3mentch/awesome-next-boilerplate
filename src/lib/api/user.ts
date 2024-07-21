@@ -5,7 +5,7 @@ import { signMessage } from "@wagmi/core";
 import { wagmiConfig } from "../web3/client";
 import { redirect } from "next/navigation";
 
-const UserAPI = {
+const AuthAPI = {
   requestMessage: async function (address: Address) {
     try {
       const response = await api("GET", "/v1/auth/request", {
@@ -58,4 +58,4 @@ const UserAPI = {
   },
 };
 
-export default UserAPI;
+export default AuthAPI;
