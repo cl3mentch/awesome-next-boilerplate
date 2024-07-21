@@ -5,10 +5,10 @@ import { cookieStorage, createStorage } from "wagmi";
 import { bsc, bscTestnet } from "wagmi/chains";
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
-
 if (!projectId) throw new Error("Project ID is not defined");
 
 const isProduction = process.env.NODE_ENV === "production";
+
 const bscChain = isProduction ? bsc : bscTestnet;
 
 export const wagmiConfig = defaultWagmiConfig({

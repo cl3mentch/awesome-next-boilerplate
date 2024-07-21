@@ -1,10 +1,10 @@
-import { createStore } from "zustand/vanilla";
+import { create } from "zustand";
 import { type GetAccountReturnType } from "@wagmi/core";
 import { wagmiConfig } from "../web3/client";
 import { getAccount, watchAccount } from "@wagmi/core";
 
 export type WagmiState = {
-  account: GetAccountReturnType;
+  account: GetAccountReturnType | null;
 };
 
 export type WagmiAction = {
@@ -17,19 +17,15 @@ export const defaultInitState: WagmiState = {
   account: getAccount(wagmiConfig),
 };
 
-export const createWagmiStore = (initState: WagmiState = defaultInitState) => {
-  return createStore<WagmiStore>()((set) => ({
-    ...initState,
-    setAccount: (account: GetAccountReturnType) => set({ account }),
-  }));
-};
+export const useWagmiStore = create<WagmiStore>((set) => ({
+  ...defaultInitState,
+  setAccount: (account: GetAccountReturnType) => {
+    set({ account });
+  },
+}));
 
-// Watch for account changes and update the store
 watchAccount(wagmiConfig, {
   onChange(data) {
-    if (data) {
-      const accountStore = createWagmiStore();
-      accountStore.getState().setAccount(data);
-    }
+    useWagmiStore.getState().setAccount(data); // Update Zustand hook
   },
 });
