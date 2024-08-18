@@ -1,6 +1,6 @@
 import { getPublicClient } from "@wagmi/core";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-import { createWalletClient, custom, WalletClient } from "viem";
+import { createPublicClient, createWalletClient, custom, http, WalletClient } from "viem";
 import { cookieStorage, createStorage } from "wagmi";
 import { bsc, bscTestnet } from "wagmi/chains";
 
@@ -24,6 +24,9 @@ export const wagmiConfig = defaultWagmiConfig({
     storage: cookieStorage,
   }),
   ssr: true,
+  client({ chain }) {
+    return createPublicClient({ chain, transport: http() });
+  },
 });
 
 // Declare Client for blockchain interaction

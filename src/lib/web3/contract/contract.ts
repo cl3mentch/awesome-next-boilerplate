@@ -1,16 +1,11 @@
 import {
   getContract,
   type Abi,
-  type Account,
   type Address,
-  type Chain,
-  type Client,
-  type GetContractReturnType,
-  type PublicClient,
-  type Transport,
+  type PublicClient
 } from "viem";
-import contractConfig from "./contract.config.json";
 import { walletClient } from "../client";
+import contractConfig from "./contract.config.json";
 
 export const contracts = contractConfig.contracts;
 export const listABIs:
