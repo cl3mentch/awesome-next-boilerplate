@@ -22,15 +22,11 @@ export const wagmiContracts:
 
 let allABIs: Abi = [];
 
-function _getContract<
-  TAbi extends Abi,
-  TClient extends {
-    public: Client<Transport, Chain | undefined>;
-    wallet?:
-      | Client<Transport, Chain | undefined, Account | undefined>
-      | undefined;
-  }
->(name: keyof typeof contracts, abi: TAbi, client: PublicClient) {
+function _getContract<TAbi extends Abi>(
+  name: keyof typeof contracts,
+  abi: TAbi,
+  client: PublicClient
+) {
   allABIs = [...allABIs, ...abi];
 
   listABIs[name] = abi;
@@ -47,5 +43,5 @@ function _getContract<
       public: client,
       wallet: walletClient,
     },
-  }) as GetContractReturnType<TAbi, TClient, Address>;
+  });
 }
